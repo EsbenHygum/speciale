@@ -2,15 +2,13 @@
 #include <stdio.h>
 #include <math.h>
 #include <cmath>
-using namespace std;
 
 double r_M(double alpha){
-  double riemann_zeta(double arg);
   if (alpha == 1){
-    return 216*log(2)*riemann_zeta(3)/pow(M_PI, 4);
+    return 216*log(2)*std::riemann_zeta(3)/pow(M_PI, 4);
   }
   double A = pow(2, alpha + 1);
-  double r = ((4*pow(A, 2) - 5*A + 1)*(alpha + 3)*riemann_zeta(alpha + 2)*riemann_zeta(alpha + 2)) / (pow(2*A - 1, 2)*(alpha + 2)*pow(riemann_zeta(alpha + 3), 2));
+  double r = ((4*pow(A, 2) - 5*A + 1)*(alpha + 3)*std::riemann_zeta(alpha + 2)*std::riemann_zeta(alpha + 2)) / (pow(2*A - 1, 2)*(alpha + 2)*pow(std::riemann_zeta(alpha + 3), 2));
   return r;
 }
 
@@ -21,7 +19,7 @@ double func(double alpha, double r){
 
 double bisection(double a, double b, int N, double x_abs_tol, double epsilon, double r){
   if (func(a, r)*func(b, r) >= 0){
-    cout << "Bisection method fails - 1";
+    std::cout << "Bisection method fails - 1" << std::endl;
     return NULL;
   }
   double a_n = a;
@@ -30,7 +28,7 @@ double bisection(double a, double b, int N, double x_abs_tol, double epsilon, do
     double m_n = (a_n + b_n)/2;
     double f_m_n = func(m_n, r);
     if (f_m_n == 0){
-      cout << "Found exact solution";
+      std::cout << "Found exact solution" << std::endl;
       return m_n;
     }
     else if (func(a_n, r)*f_m_n < 0){
@@ -74,6 +72,6 @@ double get_alpha(double r){
 
 int main(){
   double d = get_alpha(1.6);
-  cout << d;
+  std::cout << d << std::endl;
   return 0;
 }
