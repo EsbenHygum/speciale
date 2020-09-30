@@ -31,7 +31,7 @@ def bisection(f, a, b, N, x_abs_tol, epsilon):
     m_n = (a_n + b_n)/2
     f_m_n = f(m_n)
     if f_m_n == 0:
-      print('Found exact solution')
+#      print('Found exact solution')
       return m_n
     elif f(a_n)*f_m_n < 0:
       b_n = m_n
@@ -66,18 +66,9 @@ def get_alpha(r, M_2, M_3):
   x = x_param(alpha, M_2, M_3)
   return alpha, q0, x
 
-M_2 = 90
-M_3 = 90
-r = 500
-#alpha = []
-#q0 = []
-#x = []
-#for ii in range(0, 100):
-#  r += 0.5
-#  d = get_alpha(r, M_2, M_3)
-#  alpha[ii] = d[0]
-#  q0[ii] = d[1]
-#  x[ii] = d[2]
+M_2 = 10
+M_3 = 10
+r = 100
 
 d = get_alpha(r, M_2, M_3)
 alpha = d[0]
@@ -100,4 +91,33 @@ ax[0].grid()
 ax[1].grid()
 ax[2].grid()
 plt.show()
+
+alpha = []
+q0 = []
+x = []
+M_3 = 1.01
+M_3_t = []
+for ii in range(0, 1000):
+  d = get_alpha(r, M_2, M_3)
+  alpha.append(d[0])
+  q0.append(d[1])
+  x.append(d[2])
+  M_3_t.append(M_3)
+  M_3 += 0.05
+
+fig, ax = plt.subplots(3)
+ax[0].plot(M_3_t, alpha, 'r')
+ax[0].set(ylabel='$alpha$')
+ax[1].plot(M_3_t, q0, 'g')
+ax[1].set(ylabel='$q_0$')
+ax[2].plot(M_3_t, x, 'b')
+ax[2].set(ylabel='$x$')
+plt.xlabel('$M_3$')
+ax[0].set_title('$r$ = %.2f, $M_2$ = %.2f' %(r, M_2))
+ax[0].grid()
+ax[1].grid()
+ax[2].grid()
+plt.show()
+
+
 
